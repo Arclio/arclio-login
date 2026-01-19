@@ -9,6 +9,8 @@ from threading import Thread
 from typing import Optional
 from urllib.parse import parse_qs, urlparse
 
+from .logo import LOGO_DATA_URI
+
 DEFAULT_PORTS = [3100, 3101, 3102, 3103, 3104]
 CALLBACK_TIMEOUT = 120  # seconds
 
@@ -103,41 +105,57 @@ class OAuthCallbackServer:
                 self.send_header("Content-Type", "text/html")
                 self.end_headers()
                 self.wfile.write(
-                    b"""<!DOCTYPE html>
+                    f"""<!DOCTYPE html>
 <html>
 <head>
     <title>Authentication Successful</title>
     <style>
-        body {
+        body {{
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .container {
-            background: white;
-            padding: 3rem;
-            border-radius: 1rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            background: #fff;
+        }}
+        .container {{
             text-align: center;
-            max-width: 500px;
-        }
-        h1 { color: #48bb78; margin: 0 0 1rem 0; }
-        p { color: #4a5568; margin: 0.5rem 0; }
+            max-width: 400px;
+            padding: 2rem;
+        }}
+        .logo {{
+            width: 160px;
+            margin-bottom: 2rem;
+        }}
+        .status-icon {{
+            font-size: 64px;
+            color: #22c55e;
+            margin-bottom: 1rem;
+        }}
+        h1 {{
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+        }}
+        p {{
+            color: #666;
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+        }}
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Authentication Successful!</h1>
-        <p>You have been successfully authenticated.</p>
+        <img src="{LOGO_DATA_URI}" alt="Arclio" class="logo">
+        <div class="status-icon">&#10003;</div>
+        <h1>Authentication Successful</h1>
         <p>You can close this window and return to the terminal.</p>
     </div>
     <script>setTimeout(() => window.close(), 3000)</script>
 </body>
-</html>"""
+</html>""".encode()
                 )
 
             def _send_error_page(self, error: str, description: str):
@@ -159,23 +177,45 @@ class OAuthCallbackServer:
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #fff;
         }}
         .container {{
-            background: white;
-            padding: 3rem;
-            border-radius: 1rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             text-align: center;
-            max-width: 500px;
+            max-width: 400px;
+            padding: 2rem;
         }}
-        h1 {{ color: #e53e3e; margin: 0 0 1rem 0; }}
-        p {{ color: #4a5568; margin: 0.5rem 0; }}
-        .error {{ color: #e53e3e; font-family: monospace; }}
+        .logo {{
+            width: 160px;
+            margin-bottom: 2rem;
+        }}
+        .status-icon {{
+            font-size: 64px;
+            color: #ef4444;
+            margin-bottom: 1rem;
+        }}
+        h1 {{
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+        }}
+        p {{
+            color: #666;
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+        }}
+        .error {{
+            color: #ef4444;
+            font-family: monospace;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }}
     </style>
 </head>
 <body>
     <div class="container">
+        <img src="{LOGO_DATA_URI}" alt="Arclio" class="logo">
+        <div class="status-icon">&#10007;</div>
         <h1>Authentication Failed</h1>
         <p>There was an error during authentication.</p>
         <p class="error">{safe_error}: {safe_desc}</p>

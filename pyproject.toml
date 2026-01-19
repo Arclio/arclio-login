@@ -63,6 +63,7 @@ select = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["E501"]
+"src/arclio_login/oauth_server.py" = ["E501"]  # HTML templates with embedded base64
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
