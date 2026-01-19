@@ -1,0 +1,26 @@
+# Pre-commit hooks for arclio-login
+# Install: uv run poe setup-hooks
+#
+# This runs checks before committing to catch issues early.
+# All hooks delegate to poe tasks - poe is the source of truth.
+
+repos:
+  # Standard file hygiene checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+
+  - repo: local
+    hooks:
+      # Run poe pre-commit (format, lint, pyright) before each commit
+      # This ensures code quality standards are met before committing
+      - id: poe-pre-commit
+        name: Run poe pre-commit (format, lint, pyright)
+        entry: bash -c 'uv run poe pre-commit'
+        language: system
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true

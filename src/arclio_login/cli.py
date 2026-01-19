@@ -51,7 +51,7 @@ async def _login_async(client):
     server = OAuthCallbackServer()
 
     try:
-        port = server.start()
+        server.start()
         callback_url = server.get_callback_url()
         auth_url = client.build_auth_url(callback_url)
 
@@ -135,7 +135,8 @@ def status():
         console.print(f"  User: {email}")
     if user_id:
         console.print(f"  ID: {user_id}")
-    console.print(f"  Token: {'[yellow]Expired (will refresh)[/yellow]' if expired else '[green]Valid[/green]'}")
+    token_status = "[yellow]Expired (will refresh)[/yellow]" if expired else "[green]Valid[/green]"
+    console.print(f"  Token: {token_status}")
     console.print(f"  Config: {config.get_config_path()}")
 
 
