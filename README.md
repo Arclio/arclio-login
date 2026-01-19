@@ -94,4 +94,4 @@ uv run arclio --help
 
 ## License
 
-MIT
+Copyright 2025 Arclio. All rights reserved.
