@@ -5,13 +5,11 @@ Arclio CLI for Kinde OAuth authentication. Get tokens easily for use with platfo
 ## Installation
 
 ```bash
-# Using uv (recommended)
-uv pip install arclio-login
+# Install directly from GitHub
+uv pip install git+https://github.com/Arclio/arclio-login.git
 
-# Or clone and install locally
-git clone https://github.com/Arclio/arclio-login.git
-cd arclio-login
-uv pip install -e .
+# Or with pip
+pip install git+https://github.com/Arclio/arclio-login.git
 ```
 
 ## Configuration
